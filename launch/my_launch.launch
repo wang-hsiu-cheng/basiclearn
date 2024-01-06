@@ -1,0 +1,27 @@
+<launch>
+    <arg name="vel" default="100" />
+    <include file="$(find basiclearn)/launch/included.launch" >
+        <arg name="velocity" value="$(arg vel)" />
+    </include>
+
+    <node type="talker" pkg="basiclearn" name="publisher1" output="screen" >
+        <remap from="counter" to="counter_1"/>
+    </node>
+    <node type="listener" pkg="basiclearn" name="subscriber1" output="screen" >
+        <remap from="counter" to="counter_1"/>
+    </node>
+    <node type="listener" pkg="basiclearn" name="subscriber2" output="screen" >
+        <remap from="counter" to="counter_1"/>
+    </node>
+
+    <!-- string -->
+    <param name="frame_id"   type="string" value="laser_frame" />
+    <!-- double -->    
+    <param name="pose_x" type="double" value="20.5" />
+    <!-- int -->
+    <param name="baudrate"   type="int" value="512000" />
+
+    <rosparam command="delete" param="/baudrate" />   
+    <rosparam command="load" file="$(find basiclearn)/params/practice.yaml" />
+    <rosparam command="dump" file="$(find basiclearn)/params/practice.yaml" />
+</launch>
